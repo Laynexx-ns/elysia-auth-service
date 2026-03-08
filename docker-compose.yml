@@ -1,8 +1,36 @@
 services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: elysia-auth-service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d elysia-auth-service"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   elysia-backend:
-    container_name: elysia-backend-service
+    container_name: elysia-auth-service
     ports:
       - 3000:3000
     build: .
     env_file: [.env]
     restart: unless-stopped
+    depends_on:
+      migrator:
+        condition: service_completed_successfully
+
+  migrator:
+    container_name: auth-db-migrator
+    depends_on:
+      postgres:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile-migrate
+    env_file: [.env]
+    restart: no

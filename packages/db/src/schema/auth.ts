@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+import { boolean, index, text, timestamp } from "drizzle-orm/pg-core";
 import { authSchema } from "./pg-schemas";
 
 export const user = authSchema.table("user", {
@@ -32,9 +32,7 @@ export const session = authSchema.table(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
   },
-  (table) => ([
-    index("session_user_id_idx").on(table.userId),
-  ]),
+  (table) => [index("session_user_id_idx").on(table.userId)]
 );
 
 export const account = authSchema.table(
@@ -59,9 +57,7 @@ export const account = authSchema.table(
       .$onUpdate(() => new Date())
       .notNull(),
   },
-  (table) => ([
-    index("account_user_id_idx").on(table.userId),
-  ]),
+  (table) => [index("account_user_id_idx").on(table.userId)]
 );
 
 export const verification = authSchema.table(
@@ -77,11 +73,7 @@ export const verification = authSchema.table(
       .$onUpdate(() => new Date())
       .notNull(),
   },
-  (table) => ([
-     index("verification_identifier_idx").on(
-      table.identifier,
-    ),
-  ]),
+  (table) => [index("verification_identifier_idx").on(table.identifier)]
 );
 
 export const userRelations = relations(user, ({ many }) => ({

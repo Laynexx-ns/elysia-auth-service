@@ -3,7 +3,7 @@ FROM oven/bun:1 AS prepare
 WORKDIR /app
 
 COPY . .
-RUN bun i --frozen-lockfile --production
+RUN bun i --frozen-lockfile --production --ignore-scripts
 
 FROM oven/bun:1 AS builder
 

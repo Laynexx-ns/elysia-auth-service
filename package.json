@@ -4,7 +4,11 @@
   "scripts": {
     "dev": "bun run --hot src/index",
     "build": "bun build src/index.ts --outdir dist --target bun",
-    "start": "bun run dist/index.js"
+    "start": "bun run dist/index.js",
+    "check": "ultracite check",
+    "db:push": "bun run --cwd ./packages/db db:push",
+    "fix": "ultracite fix",
+    "prepare": "lefthook install"
   },
   "workspaces": {
     "packages": [
@@ -29,12 +33,15 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest",
-    "@elysia-auth-service/config": "workspace:*",
-    "@elysia-auth-service/env": "workspace:*",
-    "@elysia-auth-service/db": "workspace:*",
+    "@biomejs/biome": "2.4.5",
+    "@elysia-auth-service/api": "workspace:*",
     "@elysia-auth-service/auth": "workspace:*",
-    "@elysia-auth-service/api": "workspace:*"
+    "@elysia-auth-service/config": "workspace:*",
+    "@elysia-auth-service/db": "workspace:*",
+    "@elysia-auth-service/env": "workspace:*",
+    "@types/bun": "latest",
+    "lefthook": "^2.1.3",
+    "ultracite": "7.2.5"
   },
   "peerDependencies": {
     "typescript": "^5"

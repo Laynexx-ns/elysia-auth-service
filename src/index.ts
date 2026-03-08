@@ -37,7 +37,7 @@ const app = new Elysia()
       methods: ["GET", "POST", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true,
-    }),
+    })
   )
   .mount(auth.handler)
   .all(
@@ -51,7 +51,7 @@ const app = new Elysia()
     },
     {
       parse: "none",
-    },
+    }
   )
   .all(
     "/api-reference*",
@@ -64,7 +64,7 @@ const app = new Elysia()
     },
     {
       parse: "none",
-    },
+    }
   )
   .get("/", () => "OK")
   .listen(3000, () => {
