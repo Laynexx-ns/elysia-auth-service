@@ -1,0 +1,8 @@
+services:
+  elysia-backend:
+    container_name: elysia-backend-service
+    ports:
+      - 3000:3000
+    build: .
+    env_file: [.env]
+    restart: unless-stopped
